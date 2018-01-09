@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lin.shop.dao.impl.UsersDaoImpl">
+
+	<sql id="table"> users </sql>
+
+	<resultMap id="beanMap" type="Users">
+		<id column="uuid" property="uuid" />
+		<result column="name" property="name" />
+		<result column="creattime" property="createTime" />
+		<result column="version" property="version" />
+		<result column="age" property="age" />
+	</resultMap>
+
+	<insert id="insert" parameterType="Users">
+	 <selectKey keyProperty="uuid" resultType="String" order="BEFORE">
+            select replace(UUID(),'-','') from dual 
+        </selectKey>
+		insert into
+		<include refid="table" />
+		(uuid,VERSION, createtime, name,age )
+		values (#{uuid},#{version}, #{createTime}, #{name},#{age} )
+	</insert>
+
+	<!-- 更新:version+1 实现乐观锁 -->
+	<update id="update" parameterType="Users">
+		update
+		<include refid="table" />
+		<set>
+			<if test="name != null and name != '' ">
+				NAME = #{name},
+			</if>
+			<if test="age != null and age !=''">
+				age = #{age},
+			</if>
+			VERSION = #{version} + 1,
+			
+		</set>
+		<where>
+			uuID = #{uuid} and VERSION = #{version}
+		</where>
+	</update>
+
+	<select id="getById" parameterType="long" resultMap="beanMap">
+		select * from
+		<include refid="table" />
+		where ID = #{id}
+	</select>
+
+	<sql id="condition_sql">
+		<if test="id != null and id != ''"> and ID = #{id}</if>
+		<if test="type != null and type != ''"> and TYPE = #{type}</if>
+		<if test="title != null and title != ''"> and TITLE like CONCAT(CONCAT('%',#{title}), '%') </if>
+		<if test="operatorName != null and operatorName != ''"> and OPERATORNAME = #{operatorName}</if>
+		<if test="status != null and status != ''"> and STATUS = #{status}</if>
+		<if test="articleType != null and articleType != ''"> and ARTICLETYPE = #{articleType}</if>
+		<if test="beginDate != null and beginDate != null and endDate != '' and endDate != ''">
+			and CREATETIME between #{beginDate} and CONCAT(#{endDate}, ' 23:59:59')
+		</if>
+	</sql>
+
+	<select id="listPage" parameterType="java.util.Map" resultMap="beanMap">
+		select * from
+		<include refid="table" />
+		<where>
+			<include refid="condition_sql" />
+		</where>
+		<![CDATA[ order by uuID desc]]>
+	</select>
+
+	<select id="listPageCount" parameterType="java.util.Map" resultType="long">
+		select count(1) from
+		<include refid="table" />
+		<where>
+			<include refid="condition_sql" />
+		</where>
+	</select>
+
+	<select id="listBy" parameterType="java.util.Map" resultMap="beanMap">
+		select * from
+		<include refid="table" />
+<!-- 		<where> -->
+<!-- 			<include refid="condition_sql" /> -->
+<!-- 		</where> -->
+		<![CDATA[ order by uuID desc]]>
+	</select>
+
+</mapper>
