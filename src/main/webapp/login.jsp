@@ -24,7 +24,7 @@
 
     <div class="container">
 
-      <form class="form-signin" method="post" action="">
+      <form class="form-signin" method="post" action="user/index">
         <h3 class="form-signin-heading">请登录</h3>
         <label for="inputEmail" class="sr-only">用户名</label>
         <input type="text" id="inputEmail" class="form-control" placeholder="用户名" name="username" required autofocus>

@@ -11,15 +11,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lin.shop.biz.UsersBiz;
+import com.lin.shop.biz.XBiz;
 import com.lin.shop.common.PageBean;
 import com.lin.shop.common.PageParam;
 import com.lin.shop.model.Users;
+import com.lin.shop.model.X;
 
 @Controller
 @RequestMapping(value="hello")
 public class Hello {
 	@Autowired
 	private UsersBiz usersBiz;
+	@Autowired
+	private XBiz xBiz;
+	
+	@RequestMapping(value="/insert_x",method=RequestMethod.GET)
+	@ResponseBody
+	public Long insert_x(X x){
+		X xx = new X();
+		 xBiz.insert(xx);
+		return null;
+	}
+	
 	
 	@RequestMapping(value="a")
 	@ResponseBody

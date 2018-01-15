@@ -19,42 +19,42 @@ public class RoleDaoImpl extends BaseDaoImpl<Role> implements RoleDao{
 
 	public long insert(List<Role> list) {
 		// TODO Auto-generated method stub
-		return 0;
+		return getSqlSession().insert(getStatement(SQL_BATCH_INSERT), list);
 	}
 
 	public int update(Role entity) {
 		// TODO Auto-generated method stub
-		return 0;
+		return getSqlSession().update(getStatement(SQL_UPDATE), entity);
 	}
 
 	public int update(List<Role> list) {
 		// TODO Auto-generated method stub
-		return 0;
+		return getSqlSession().update(getStatement(SQL_BATCH_UPDATE), list);
 	}
 
 	public Role getById(long id) {
 		// TODO Auto-generated method stub
-		return null;
+		return getSqlSession().selectOne(getStatement("getById"), id);
 	}
 
 	public Role getBy(Map<String, Object> paramMap) {
 		// TODO Auto-generated method stub
-		return null;
+		return getSqlSession().selectOne(getStatement("getBy"), paramMap);
 	}
 
 	public void addRole(Role role) {
 		// TODO Auto-generated method stub
-		
+		getSqlSession().insert(getStatement("addRole"), role);
 	}
 
 	public void deleteRole(Long roleId) {
 		// TODO Auto-generated method stub
-		
+		getSqlSession().delete(getStatement("deleteRole"), roleId);
 	}
 
 	public Role findById(Long roleId) {
 		// TODO Auto-generated method stub
-		return null;
+		return getSqlSession().selectOne(getStatement("findById"), roleId);
 	}
 
 	public List<Role> findRolesByUserName(String userName) {
@@ -64,27 +64,26 @@ public class RoleDaoImpl extends BaseDaoImpl<Role> implements RoleDao{
 
 	public List<Role> findAllRoles() {
 		// TODO Auto-generated method stub
-		return getSqlSession().selectList(getStatement("findRolesByUserName"));
+		return getSqlSession().selectList(getStatement("findAllRoles"));
 	}
 
 	public void updateRole(Role role) {
 		// TODO Auto-generated method stub
-		
+		getSqlSession().update(getStatement("updateRole"), role);
 	}
 
 	public void deleteUserRole(Long roleId) {
-		// TODO Auto-generated method stub
-		
+		getSqlSession().delete(getStatement("deleteUserRole"), roleId);		
 	}
 
 	public void deleteRolePermission(Long roleId) {
 		// TODO Auto-generated method stub
-		
+		getSqlSession().delete(getStatement("deleteRolePermission"), roleId);		
 	}
 
 	public void addRolePermission(RolePermission rolePermission) {
 		// TODO Auto-generated method stub
-		
+		getSqlSession().insert(getStatement("addRolePermission"), rolePermission);
 	}
 
 }

@@ -20,6 +20,29 @@
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location" value="classpath:jdbc.properties" />
 	</bean>
+	<!-- rocketmq -->
+	 <bean id="messageListeners" class="com.lin.shop.listeners.MessageListenerImpl"></bean>
+    <bean id="consumer" class="com.alibaba.rocketmq.client.consumer.DefaultMQPushConsumer" init-method="start" destroy-method="shutdown">
+        <property name="consumerGroup" value="rocketmqConsumer"/>
+        <property name="namesrvAddr" value="127.0.0.1:9876"/>
+        <property name="messageListener" ref="messageListeners"/>
+        <property name="consumeMessageBatchMaxSize" value="10"/>
+        <property name="subscription">
+            <map>
+                <entry key="PushTopic">
+                    <value>*</value>
+                </entry>
+                <entry key="topicTest">
+                    <value>*</value>
+                </entry>
+            </map>
+        </property>
+    </bean>
+    <bean id="producer" class="com.alibaba.rocketmq.client.producer.DefaultMQProducer" init-method="start" destroy-method="shutdown">
+        <property name="producerGroup" value="rocketmqProduct"/>
+        <property name="namesrvAddr" value="127.0.0.1:9876"/>
+    </bean>
+    
 	<aop:aspectj-autoproxy proxy-target-class="true" />	
 	<import resource="classpath:spring/spring-mybatis.xml"/>
 	<import resource="classpath:spring/spring-shiro.xml"/>
