@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script language="JavaScript" type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="js/security.js"></script>
+<script language="JavaScript" type="text/javascript" src="js/aes.js"></script>
+
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		url:'http://localhost:8080/mySsm/rsa/getPublicKey',
+		success:function(data){
+			console.info(data)
+		}
+	})
+})
+function encry()
+{
+    var modulus = $('#hid_modulus').val(), exponent = $('#hid_exponent').val();  
+
+    var key = RSAUtils.getKeyPair(exponent, '', modulus);  
+
+    var word =$("#word").val();
+
+    var apwd1 = RSAUtils.encryptedString(key, word);  
+
+    $("#clj").text(apwd1);
+}
+//-->
+</script>
+
+  <body onLoad='set_1024f4();' onClick='rng_seed_time();' onKeyPress='rng_seed_time();'>
+    <h1>JavaScript RSA Encryption Demo</h1>
+    需要加密的字符串：
+    <input type="text" id="word" value="test"/>
+    <br/>
+    <input type="text" id="hid_modulus" value="87ed46361aac6f35f37a71b8eb2ea20b2a4dcd355ca7954178e29e25cf9d861608945b2bea60c135951a383bfb8ed3eb33c9306e2704fdc14694ebb6dda85c120109096915c792257a16c96ba71c9ec4c7c5293ea789bd941ef444c00f432dc731bfac1d55ac2a90db53d57ea417d0ef133e2c086ec6dd7024f734419aa6afbd"/>
+    <br/>
+    <input type="text" id="hid_exponent" value="10010"/>
+    <input type="button" onclick="encry()" value="加密"/>
+    <div id="clj"></div>
+  </body>
+</html>

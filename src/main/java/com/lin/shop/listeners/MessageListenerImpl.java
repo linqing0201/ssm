@@ -23,6 +23,10 @@ public class MessageListenerImpl implements MessageListenerConcurrently {
 			ConsumeConcurrentlyContext context) {
 		for (MessageExt messageExt : msgs) {
 			log.info(messageExt.toString());
+			X x =new X();
+			x.setVersion(1);
+			x.setC(new String(messageExt.getBody()));
+			xBiz.insert(x);
 			System.out.println(new String(messageExt.getBody()));
 		}
 		log.info("getDelayLevelWhenNextConsume="
@@ -30,14 +34,7 @@ public class MessageListenerImpl implements MessageListenerConcurrently {
 				+ context.getMessageQueue().toString()
 				+ "getDelayLevelWhenNextConsume="
 				+ context.getDelayLevelWhenNextConsume());
-		X x =new X();
-		x.setVersion(1);
-		x.setC("getDelayLevelWhenNextConsume="
-				+ context.getDelayLevelWhenNextConsume() + "getMessageQueue="
-				+ context.getMessageQueue().toString()
-				+ "getDelayLevelWhenNextConsume="
-				+ context.getDelayLevelWhenNextConsume());
-		xBiz.insert(x);
+		
 		return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
 	}
 

@@ -240,6 +240,14 @@
 			<version>3.2.6</version>
 			<type>pom</type>
 		</dependency>
+		<!-- rsa -->
+		<!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk14 -->
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk14</artifactId>
+			<version>1.59</version>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<finalName>mySsm</finalName>

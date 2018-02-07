@@ -26,8 +26,8 @@ public class ShiroTest {
 	}
 	@Test
 	public void test1(){
-		login("classpath:shiro-role.ini");
-		System.out.println(subject.hasRole("role12"));
-		subject.checkPermission("user:create1");
+//		login("classpath:shiro-role.ini");
+//		System.out.println(subject.hasRole("role12"));
+//		subject.checkPermission("user:create1");
 	}
 }

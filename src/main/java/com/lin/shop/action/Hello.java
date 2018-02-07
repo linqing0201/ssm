@@ -37,7 +37,7 @@ public class Hello {
 	@RequestMapping(value="a")
 	@ResponseBody
 	public String a(){
-		return "hello";
+		return "hello:9091";
 	}
 	@RequestMapping(value="/listBy",method=RequestMethod.POST)
 	@ResponseBody
